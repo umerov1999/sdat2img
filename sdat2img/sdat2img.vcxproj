@@ -39,6 +39,9 @@
   <ItemGroup>
     <ResourceCompile Include="sdat2img.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\icon.ico" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

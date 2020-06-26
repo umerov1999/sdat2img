@@ -1,12 +1,9 @@
 ﻿#include <iostream>
-#include <cstdlib>
 #include <string>
 #include <vector>
 #include <tchar.h>
 #include <cstring>
 #include <fstream>
-#include <limits.h>
-#include <stdint.h>
 extern "C"
 {
 #include "../common/constants.h"
@@ -231,7 +228,6 @@ void write_blocks(long long count, FILE* sdat, FILE* img) {
     }
     safe_read(buf.data(), safe_convert(count), sdat);
     safe_write(buf.data(), safe_convert(count), img);
-    fflush(img);
 }
 
 void empty_blob(long long count, FILE* img) {
@@ -244,7 +240,6 @@ void empty_blob(long long count, FILE* img) {
         count -= BUF_SIZE;
     }
     safe_write(buf.data(), safe_convert(count), img);
-    fflush(img);
 }
 
 void erase_zero(long long bstart, long long bend, FILE* img) {
@@ -302,11 +297,25 @@ bool DetectBrotli(wstring file_path) {
     return false;
 }
 
+wstring MakePath(wstring dir, wstring file) {
+    if (!dir.empty())
+        return dir + L"\\" + file;
+    return file;
+}
+
 wstring getPrefix(wstring file_path) {
+    wstring path = L"";
+    size_t poff = file_path.find_last_of(L"\\/");
+    if (poff != wstring::npos) {
+        path = file_path.substr(0, poff);
+        file_path = file_path.substr(poff + 1);
+    }
+
+
     size_t off = file_path.find_first_of(L'.');
     if (off == wstring::npos)
-        return file_path;
-    return file_path.substr(0, off);
+        return MakePath(path, file_path);
+    return MakePath(path, file_path.substr(0, off));
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
