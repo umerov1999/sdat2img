@@ -4,7 +4,6 @@
 #include <vector>
 #include <tchar.h>
 #include <cstring>
-#include <Windows.h>
 #include <fstream>
 #include <limits.h>
 #include <stdint.h>
@@ -232,6 +231,7 @@ void write_blocks(long long count, FILE* sdat, FILE* img) {
     }
     safe_read(buf.data(), safe_convert(count), sdat);
     safe_write(buf.data(), safe_convert(count), img);
+    fflush(img);
 }
 
 void empty_blob(long long count, FILE* img) {
@@ -244,6 +244,7 @@ void empty_blob(long long count, FILE* img) {
         count -= BUF_SIZE;
     }
     safe_write(buf.data(), safe_convert(count), img);
+    fflush(img);
 }
 
 void erase_zero(long long bstart, long long bend, FILE* img) {

@@ -31,6 +31,7 @@
     <ClInclude Include="brotli\dec\prefix.h" />
     <ClInclude Include="brotli\dec\state.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WSTRUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="brotli\common\dictionary.bin" />
